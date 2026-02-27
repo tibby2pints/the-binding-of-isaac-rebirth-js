@@ -214,9 +214,9 @@ var Player = {
 			else if(keyA){Animations[2].draw(context);}
 			else if(keyW || keyS){Animations[0].draw(context);}
 			//Corps idle
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 80);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 500);
 			context.restore();	}
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 80);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 500);
 			
 			if(this.lessThanThree){
 				if(keyA)Animations[4].update(Player.x+3,Player.y+10);
