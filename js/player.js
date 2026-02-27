@@ -214,9 +214,9 @@ var Player = {
 			else if(keyA){Animations[2].draw(context);}
 			else if(keyW || keyS){Animations[0].draw(context);}
 			//Corps idle
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+12, 40, 40);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+12, 80, 40);
 			context.restore();	}
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+12, 40, 40);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+12, 80, 40);
 			
 			if(this.lessThanThree){
 				if(keyA)Animations[4].update(Player.x+3,Player.y+10);
@@ -737,8 +737,7 @@ function Bullet(side,speed,range,bulx,buly,accelx,accely,dmg,type){
 					else this.dirx = 0;
 					
 					this.diry = (Player.y - Player.height/2) - ((Player.y - Player.width/2)-this.range);
-					this.targety = this.iniy - this.range;
-					var hyp = Math.sqrt(this.dirx*this.dirx + this.diry*this.diry);
+					this.targety = this.iniy - this.ra					var hyp = Math.sqrt(this.dirx*this.dirx + this.diry*this.diry);
 					this.diry = this.diry/hyp;
 					if(this.y > this.targety){ this.x -= this.dirx*this.speed; this.y -= this.diry*this.speed;}
 					else this.alive = false;
