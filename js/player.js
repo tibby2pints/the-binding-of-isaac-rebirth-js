@@ -4,7 +4,7 @@ var Player = {
 	posx : 0, posy : 0,
 	diffx : 0, diffy : 0,
 	lastx : 0, lasty : 0,
-	height: 10,	width: 36,
+	height: 42,	width: 36,
 	accelx : 0, accely : 0, 
 	friction : 0.4,
 	speed : 2.8, speedBoost:0, 
@@ -192,7 +192,7 @@ var Player = {
 		if(hitBox)context.drawImage(imageTool.hitBox, this.x, this.y, this.width, this.height);
 		context.save();
 		context.globalAlpha = 0.15;
-		context.drawImage(imageTool.shadow, this.x-8, this.y+16, this.width+16, this.height+80);
+		context.drawImage(imageTool.shadow, this.x-8, this.y+16, this.width+16, this.height);
 		context.restore();
 			
 		if(this.alive && !isPaused && !isChanging){
@@ -214,9 +214,9 @@ var Player = {
 			else if(keyA){Animations[2].draw(context);}
 			else if(keyW || keyS){Animations[0].draw(context);}
 			//Corps idle
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 40);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+12, 40, 40);
 			context.restore();	}
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 40);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+12, 40, 40);
 			
 			if(this.lessThanThree){
 				if(keyA)Animations[4].update(Player.x+3,Player.y+10);
@@ -737,7 +737,8 @@ function Bullet(side,speed,range,bulx,buly,accelx,accely,dmg,type){
 					else this.dirx = 0;
 					
 					this.diry = (Player.y - Player.height/2) - ((Player.y - Player.width/2)-this.range);
-					this.targety = this.iniy - this.ra					var hyp = Math.sqrt(this.dirx*this.dirx + this.diry*this.diry);
+					this.targety = this.iniy - this.range;
+					var hyp = Math.sqrt(this.dirx*this.dirx + this.diry*this.diry);
 					this.diry = this.diry/hyp;
 					if(this.y > this.targety){ this.x -= this.dirx*this.speed; this.y -= this.diry*this.speed;}
 					else this.alive = false;
