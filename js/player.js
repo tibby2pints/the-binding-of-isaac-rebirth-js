@@ -192,7 +192,7 @@ var Player = {
 		if(hitBox)context.drawImage(imageTool.hitBox, this.x, this.y, this.width, this.height);
 		context.save();
 		context.globalAlpha = 0.15;
-		context.drawImage(imageTool.shadow, this.x-8, this.y+16, this.width+16, this.height);
+		context.drawImage(imageTool.shadow, this.x-8, this.y+16, this.width+16, this.height+30);
 		context.restore();
 			
 		if(this.alive && !isPaused && !isChanging){
@@ -214,9 +214,9 @@ var Player = {
 			else if(keyA){Animations[2].draw(context);}
 			else if(keyW || keyS){Animations[0].draw(context);}
 			//Corps idle
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 80, 40);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 80);
 			context.restore();	}
-			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 80, 40);
+			else context.drawImage(imageTool.bodyIdle,this.x-2, this.y+6, 40, 80);
 			
 			if(this.lessThanThree){
 				if(keyA)Animations[4].update(Player.x+3,Player.y+10);
