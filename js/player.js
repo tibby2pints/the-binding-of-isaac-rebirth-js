@@ -4,7 +4,7 @@ var Player = {
 	posx : 0, posy : 0,
 	diffx : 0, diffy : 0,
 	lastx : 0, lasty : 0,
-	height: 80,	width: 36,
+	height: 42,	width: 36,
 	accelx : 0, accely : 0, 
 	friction : 0.4,
 	speed : 2.8, speedBoost:0, 
