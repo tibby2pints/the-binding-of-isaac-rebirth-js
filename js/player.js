@@ -1,6 +1,6 @@
 //Objet joueur
 var Player = {
-	x : 100, y : 100,
+	x : 1000, y : 100,
 	posx : 0, posy : 0,
 	diffx : 0, diffy : 0,
 	lastx : 0, lasty : 0,
