@@ -11,7 +11,7 @@ var Player = {
 	range : 400, rangeBoost:0, 
 	fireRate: 350,	fireRateBoost:0,
 	attackSpeed: 8, bulletSpeedBoost:1,
-	damage : 20,	dmgBoost:0,	dmgMult:1, 
+	damage : 1,	dmgBoost:0,	dmgMult:1, 
 	bombDmg :15, bombMult :1, 
 	hp : 3,	maxhp: 3, //HP : Vie restante, MAXHP : Vie totale
 	soul : 0, //"Armure"
