@@ -363,7 +363,7 @@ function transition(){
 			context.font = "12pt wendy";
 			context.fillStyle = 'white';
 			var floornames = ["Basement 1","Basement 2","Caves 1", "caves 2", "Depths 1", "Depths 2", "Womb 1", "Womb 2];
-			var flooricons = [imageTool.duke,imageTool.project,imageTool.duke2];
+			var flooricons = [imageTool.duke,imageTool.project,imageTool.duke2,imageTool.duke,imageTool.duke,imageTool.duke,imageTool.duke,imageTool.duke];
 			context.textAlign = 'center';
 			
 			//BG
