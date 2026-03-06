@@ -362,7 +362,7 @@ function transition(){
 			
 			context.font = "12pt wendy";
 			context.fillStyle = 'white';
-			var floornames = ["Basement 1","Basement 2","Caves 1", "caves 2", "Depths 1", "Depths 2", "Womb 1", "Womb2];
+			var floornames = ["Basement 1","Basement 2","Caves 1", "caves 2", "Depths 1", "Depths 2", "Womb 1", "Womb 2];
 			var flooricons = [imageTool.duke,imageTool.project,imageTool.duke2];
 			context.textAlign = 'center';
 			
@@ -1773,6 +1773,11 @@ function Room(type,map,locy,locx,title){
 				if(floorCount ==1) var floorname = "Basement 1" + this.title;
 				else if(floorCount ==2) var floorname = "Basement 2"+ this.title;
 				else if(floorCount ==3) var floorname = "Caves 1"+ this.title;}
+				else if(floorCount ==4) var floorname = "Caves 2"+ this.title;}
+				else if(floorCount ==5) var floorname = "Depths 1"+ this.title;}
+	            else if(floorCount ==6) var floorname = "Depths 2"+ this.title;}
+ 				else if(floorCount ==7) var floorname = "Womb 1 2"+ this.title;}
+				else if(floorCount ==8) var floorname = "Womb 2"+ this.title;}
 			else floorname = this.title;
 			bgcontext.fillText(floorname,8, canvas.height-8);
 		}
