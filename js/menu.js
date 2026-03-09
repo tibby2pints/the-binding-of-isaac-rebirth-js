@@ -22,8 +22,8 @@ function animate() {
 
     // 2. LOGO (Top Section)
     // Sized to be large but leave a gap for the paper
-    let titleWidth = 650;  
-    let titleHeight = 350; 
+    let titleWidth = 750;  
+    let titleHeight = 285; 
     let titleBob = Math.sin(time * 0.8) * 5;
 
     ctx.save();
