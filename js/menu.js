@@ -1,66 +1,73 @@
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById('canvas'); // Matches your HTML ID
 const ctx = canvas.getContext('2d');
 
-// Load  images
+// Load images
 const bgImg = new Image();
 bgImg.src = 'title bg.png';
 
 const titleImg = new Image();
 titleImg.src = 'title.png';
 
-const startImg = new Image();
-startImg.src = 'start.png';
+const start = new Image(); // The paper is called 'start'
+start.src = 'js start.png';
 
 let time = 0;
 
 function animate() {
-    time += 0.05; // Overall speed of the "breathing"
+    time += 0.05; 
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 1. Draw Background (Static)
+    // 1. Draw Background (Fills the 960x576 canvas)
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
-    // 2. Draw Title Logo (Squash & Stretch)
-    // We use a sine wave to subtly change the width and height
+    // 2. Draw Title Logo (Centered & Scaled)
+    let titleWidth = 700;  // Force it bigger
+    let titleHeight = 350; 
     let titleSquash = Math.sin(time) * 0.03; 
-    let titleBob = Math.sin(time * 0.8) * 10; // Floating up/down 10px
+    let titleBob = Math.sin(time * 0.8) * 10;
 
     ctx.save();
-    ctx.translate(canvas.width / 2, 150 + titleBob);
-    ctx.scale(1 + titleSquash, 1 - titleSquash); // Width grows, height shrinks
-    ctx.drawImage(titleImg, -titleImg.width / 2, -titleImg.height / 2);
+    ctx.translate(canvas.width / 2, 180 + titleBob);
+    ctx.scale(1 + titleSquash, 1 - titleSquash);
+    // Draw centered: x and y are -half of the width and height
+    ctx.drawImage(titleImg, -titleWidth / 2, -titleHeight / 2, titleWidth, titleHeight);
     ctx.restore();
 
-    // 3. Draw "Press Start" Paper (Lazy Floating)
-    // We use a different speed (0.6) so it doesn't move perfectly with the logo
+    // 3. Draw "Press Start" Paper (Centered & BIGGER)
+    let paperWidth = 350;  // Fixed the "small asf" issue
+    let paperHeight = 400; 
     let paperBob = Math.sin(time * 0.6) * 15; 
-    let paperRotation = Math.sin(time * 0.4) * 0.02; // Tiny wiggle
+    let paperRotation = Math.sin(time * 0.4) * 0.02;
 
     ctx.save();
-    ctx.translate(canvas.width / 2, 400 + paperBob);
+    ctx.translate(canvas.width / 2, 430 + paperBob);
     ctx.rotate(paperRotation);
     
-    // Pulse the opacity of the "Press Start" paper
+    // Pulse the opacity
     ctx.globalAlpha = 0.8 + Math.sin(time * 2) * 0.2; 
     
-    ctx.drawImage(startImg, -startImg.width / 2, -startImg.height / 2);
+    // Draw centered and scaled
+    ctx.drawImage(start, -paperWidth / 2, -paperHeight / 2, paperWidth, paperHeight);
     ctx.restore();
-    ctx.globalAlpha = 1.0; // Reset alpha
+    ctx.globalAlpha = 1.0; 
 
     requestAnimationFrame(animate);
 }
 
-const images = [bgImg, titleImg, startImg];
-let loadedCount = 0;
+// Ensure all images are loaded before starting
+let loaded = 0;
+[bgImg, titleImg, start].forEach(img => {
+    img.onload = () => {
+        loaded++;
+        if (loaded === 3) animate();
+    };
+});
 
-function checkImages() {
-    loadedCount++;
-    if (loadedCount === images.length) {
-        animate();
+// Handle the "Start" transition
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Enter" || e.code === "Space") {
+        // Change this to your actual game file name
+        window.location.href = "game.html"; 
     }
-}
-
-bgImg.onload = checkImages;
-titleImg.onload = checkImages;
-startImg.onload = checkImages;
+});
