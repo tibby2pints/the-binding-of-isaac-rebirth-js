@@ -35,20 +35,29 @@ function animate() {
     ctx.restore();
 
     // 3. Draw "Press Start" Paper (Lazy Floating)
-    // We use a different speed (0.6) so it doesn't move perfectly with the logo
+    // Increase these numbers to make the paper bigger!
+    let paperWidth = 300;  // Try 300-400 for that Rebirth look
+    let paperHeight = 350; 
+
     let paperBob = Math.sin(time * 0.6) * 15; 
-    let paperRotation = Math.sin(time * 0.4) * 0.02; // Tiny wiggle
+    let paperRotation = Math.sin(time * 0.4) * 0.05; // Slightly more wiggle
 
     ctx.save();
-    ctx.translate(canvas.width / 2, 400 + paperBob);
+    // Move to the horizontal center (canvas.width / 2) 
+    // and lower down (around 420px)
+    ctx.translate(canvas.width / 2, 420 + paperBob);
     ctx.rotate(paperRotation);
-    
-    // Pulse the opacity of the "Press Start" paper
+
+    // Pulse the opacity
     ctx.globalAlpha = 0.8 + Math.sin(time * 2) * 0.2; 
-    
-    ctx.drawImage(startImg, -startImg.width / 2, -startImg.height / 2);
+
+    // DRAWING: Use the 'start' variable but force the new width/height
+    // We use -width/2 so it stays perfectly centered on our translate point
+    ctx.drawImage(start, -paperWidth / 2, -paperHeight / 2, paperWidth, paperHeight);
+
     ctx.restore();
-    ctx.globalAlpha = 1.0; // Reset alpha
+    ctx.globalAlpha = 1.0; // Reset alpha for the next frame
+
 
     requestAnimationFrame(animate);
 }
