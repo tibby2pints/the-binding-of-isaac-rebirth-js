@@ -21,8 +21,8 @@ function animate() {
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
     // 2. PRESS START PAPER (Drawn first so it stays BEHIND the logo)
-    let paperWidth = 280;  
-    let paperHeight = 350; 
+    let paperWidth = 300;  
+    let paperHeight = 370; 
 
     ctx.save();
     // Position fixed at 430 with no paperBob or rotation variables
