@@ -26,15 +26,15 @@ function animate() {
 
     ctx.save();
     // Position fixed at 430 with no paperBob or rotation variables
-    ctx.translate(canvas.width / 2, 380);
+    ctx.translate(canvas.width / 2, 370);
     // Fixed opacity at 1.0 (no pulsing)
     ctx.globalAlpha = 1.0; 
     ctx.drawImage(start, -paperWidth / 2, -paperHeight / 2, paperWidth, paperHeight);
     ctx.restore();
 
     // 3. LOGO (Drawn last so it overlaps the "Press Start" paper)
-    let titleWidth = 765;  
-    let titleHeight = 280; 
+    let titleWidth = 775;  
+    let titleHeight = 270; 
     let titleBob = Math.sin(time * 0.8) * 5;
 
     ctx.save();
