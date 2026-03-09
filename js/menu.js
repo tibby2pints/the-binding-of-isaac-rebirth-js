@@ -9,7 +9,7 @@ const titleImg = new Image();
 titleImg.src = 'title.png';
 
 const start = new Image(); 
-start.src = 'js start.png';
+start.src = 'start.png';
 
 let time = 0;
 
