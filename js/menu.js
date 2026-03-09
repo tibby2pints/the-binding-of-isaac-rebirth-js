@@ -26,7 +26,7 @@ function animate() {
 
     ctx.save();
     // Position fixed at 430 with no paperBob or rotation variables
-    ctx.translate(canvas.width / 2, 460);
+    ctx.translate(canvas.width / 2, 490);
     // Fixed opacity at 1.0 (no pulsing)
     ctx.globalAlpha = 1.0; 
     ctx.drawImage(start, -paperWidth / 2, -paperHeight / 2, paperWidth, paperHeight);
