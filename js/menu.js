@@ -1,7 +1,5 @@
-
-const canvas = document.getElementById('canvas'); 
+const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
 
 // Load  images
 const bgImg = new Image();
@@ -11,7 +9,7 @@ const titleImg = new Image();
 titleImg.src = 'title.png';
 
 const startImg = new Image();
-startImg.src = 'start.png';
+startImg.src = 'js start.png';
 
 let time = 0;
 
@@ -35,34 +33,24 @@ function animate() {
     ctx.restore();
 
     // 3. Draw "Press Start" Paper (Lazy Floating)
-    // Increase these numbers to make the paper bigger!
-    let paperWidth = 300;  // Try 300-400 for that Rebirth look
-    let paperHeight = 350; 
-
+    // We use a different speed (0.6) so it doesn't move perfectly with the logo
     let paperBob = Math.sin(time * 0.6) * 15; 
-    let paperRotation = Math.sin(time * 0.4) * 0.05; // Slightly more wiggle
+    let paperRotation = Math.sin(time * 0.4) * 0.02; // Tiny wiggle
 
     ctx.save();
-    // Move to the horizontal center (canvas.width / 2) 
-    // and lower down (around 420px)
-    ctx.translate(canvas.width / 2, 420 + paperBob);
+    ctx.translate(canvas.width / 2, 400 + paperBob);
     ctx.rotate(paperRotation);
-
-    // Pulse the opacity
+    
+    // Pulse the opacity of the "Press Start" paper
     ctx.globalAlpha = 0.8 + Math.sin(time * 2) * 0.2; 
-
-    // DRAWING: Use the 'start' variable but force the new width/height
-    // We use -width/2 so it stays perfectly centered on our translate point
-    ctx.drawImage(start, -paperWidth / 2, -paperHeight / 2, paperWidth, paperHeight);
-
+    
+    ctx.drawImage(startImg, -startImg.width / 2, -startImg.height / 2);
     ctx.restore();
-    ctx.globalAlpha = 1.0; // Reset alpha for the next frame
-
+    ctx.globalAlpha = 1.0; // Reset alpha
 
     requestAnimationFrame(animate);
 }
 
-// Start the loop once images are loaded
 const images = [bgImg, titleImg, startImg];
 let loadedCount = 0;
 
@@ -76,5 +64,3 @@ function checkImages() {
 bgImg.onload = checkImages;
 titleImg.onload = checkImages;
 startImg.onload = checkImages;
-
-
