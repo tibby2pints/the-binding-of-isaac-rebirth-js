@@ -1,5 +1,7 @@
-const canvas = document.getElementById('gameCanvas');
+
+const canvas = document.getElementById('canvas'); 
 const ctx = canvas.getContext('2d');
+
 
 // Load  images
 const bgImg = new Image();
