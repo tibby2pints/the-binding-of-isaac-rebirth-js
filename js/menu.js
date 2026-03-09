@@ -1,7 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Load your images
+// Load  images
 const bgImg = new Image();
 bgImg.src = 'title bg.png';
 
@@ -52,5 +52,18 @@ function animate() {
 }
 
 // Start the loop once images are loaded
-titleImg.onload = animate;
+const images = [bgImg, titleImg, startImg];
+let loadedCount = 0;
+
+function checkImages() {
+    loadedCount++;
+    if (loadedCount === images.length) {
+        animate();
+    }
+}
+
+bgImg.onload = checkImages;
+titleImg.onload = checkImages;
+startImg.onload = checkImages;
+
 
