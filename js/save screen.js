@@ -97,6 +97,10 @@ function animate() {
 window.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") selectedSlot = (selectedSlot + 1) % slots.length;
     if (e.key === "ArrowLeft") selectedSlot = (selectedSlot - 1 + slots.length) % slots.length;
+    if (e.code === "Enter" || e.code === "Space") {
+        window.location.href = "save.html"; 
+    }
 });
+
 
 loadAssets();
