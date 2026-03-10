@@ -1,7 +1,8 @@
+// 1. Setup Canvas (ID must match your HTML 'canvas')
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// 1. Define Asset Paths (Replace these with your actual local file paths)
+// 2. Define Asset Paths (Check these carefully for case-sensitivity on GitHub!)
 const assets = {
     background: 'title bg.png',
     slot1: 'file1.png',
@@ -14,16 +15,24 @@ const images = {};
 let loadedCount = 0;
 const totalAssets = Object.keys(assets).length;
 
-// 2. Progression Data for each slot
+// 3. Horizontal Progression Data (Side-by-Side)
 const slots = [
-    { id: 0, title: "Slot 1", imgKey: 'slot1', x: 212, y: 110 },
-    { id: 1, title: "Slot 2", imgKey: 'slot2', x: 212, y: 240 },
-    { id: 2, title: "Slot 3", imgKey: 'slot3', x: 212, y: 370 }
+    { id: 0, title: "Slot 1", imgKey: 'slot1', x: 100, y: 150 },
+    { id: 1, title: "Slot 2", imgKey: 'slot2', x: 400, y: 150 },
+    { id: 2, title: "Slot 3", imgKey: 'slot3', x: 700, y: 150 }
 ];
 
 let selectedSlot = 0;
 
-// Load images before starting
+// EMERGENCY ERROR BOX (Since console is blocked)
+window.onerror = function(msg, url, line) {
+    const err = document.createElement('div');
+    err.style = "position:fixed;top:0;left:0;background:red;color:white;padding:10px;z-index:9999;";
+    err.innerHTML = `Error: ${msg} <br> Line: ${line}`;
+    document.body.appendChild(err);
+};
+
+// 4. Load images before starting
 function loadAssets() {
     for (let key in assets) {
         images[key] = new Image();
@@ -31,6 +40,9 @@ function loadAssets() {
         images[key].onload = () => {
             loadedCount++;
             if (loadedCount === totalAssets) draw();
+        };
+        images[key].onerror = () => {
+            alert("COULD NOT FIND: " + assets[key] + " (Check paths & capitalization!)");
         };
     }
 }
@@ -53,22 +65,22 @@ function draw() {
             ctx.drawImage(sprite, slot.x, slot.y);
         }
 
-        // Draw selection circle/highlight around the active slot
+        // Draw selection highlight (Now horizontal movement)
         if (index === selectedSlot && images.selector) {
-            // Adjust x/y offsets to make the "circle" fit perfectly
             ctx.drawImage(images.selector, slot.x - 10, slot.y - 10);
         }
     });
 }
 
-// 3. Input Handling
+// 5. Input Handling (ArrowLeft and ArrowRight)
 window.addEventListener('keydown', (e) => {
-    if (e.key === "ArrowDown") {
+    if (e.key === "ArrowRight") {
         selectedSlot = (selectedSlot + 1) % slots.length;
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === "ArrowLeft") {
         selectedSlot = (selectedSlot - 1 + slots.length) % slots.length;
     }
     draw();
 });
 
+// Start the process
 loadAssets();
