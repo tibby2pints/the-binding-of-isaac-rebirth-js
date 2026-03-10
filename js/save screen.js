@@ -1,43 +1,74 @@
-// Pre-load your assets
-const menuBG = new Image();
-menuBG.src = 'path/to/your/menu_bg.png'; // The parchment texture
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-const saveSlotImg = new Image();
-saveSlotImg.src = 'path/to/your/save_slot.png'; // The base save box sprite
+// 1. Define Asset Paths (Replace these with your actual local file paths)
+const assets = {
+    background: 'assets/menu_bg.png',
+    slot1: 'assets/save_mom_killed.png',
+    slot2: 'assets/save_heart_killed.png',
+    slot3: 'assets/save_empty.png',
+    selector: 'assets/red_highlight.png'
+};
 
-function drawSaveScreen(ctx) {
-    // 1. Draw the Background (always first)
-    ctx.drawImage(menuBG, 0, 0, canvas.width, canvas.height);
+const images = {};
+let loadedCount = 0;
+const totalAssets = Object.keys(assets).length;
 
-    const startY = 150;
-    const spacing = 130;
+// 2. Progression Data for each slot
+const slots = [
+    { id: 0, title: "Slot 1", imgKey: 'slot1', x: 212, y: 110 },
+    { id: 1, title: "Slot 2", imgKey: 'slot2', x: 212, y: 240 },
+    { id: 2, title: "Slot 3", imgKey: 'slot3', x: 212, y: 370 }
+];
 
-    // 2. Loop through and draw the 3 Save Slots
-    for (let i = 0; i < 3; i++) {
-        let x = canvas.width / 2 - 200; // Centered
-        let y = startY + (i * spacing);
-        
-        const isSelected = (i === selectedSave);
+let selectedSlot = 0;
 
-        // Add 'Rebirth' style jitter only to the selected slot
-        if (isSelected) {
-            x += (Math.random() - 0.5) * 4;
-            y += (Math.random() - 0.5) * 4;
-            
-            // Optional: Draw a white "glow" or outline behind the selected slot
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = "white";
-        }
-
-        ctx.drawImage(saveSlotImg, x, y, 400, 110);
-        
-        // Reset shadow so it doesn't affect other slots
-        ctx.shadowBlur = 0;
-
-        // 3. Draw text/stats over the sprite
-        ctx.fillStyle = isSelected ? "white" : "#5a4d3e";
-        ctx.font = "24px 'Upheaval'";
-        ctx.textAlign = "center";
-        ctx.fillText(`SAVE SLOT ${i + 1}`, canvas.width / 2, y + 65);
+// Load images before starting
+function loadAssets() {
+    for (let key in assets) {
+        images[key] = new Image();
+        images[key].src = assets[key];
+        images[key].onload = () => {
+            loadedCount++;
+            if (loadedCount === totalAssets) draw();
+        };
     }
 }
+
+function draw() {
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw Background
+    if (images.background) {
+        ctx.drawImage(images.background, 0, 0, canvas.width, canvas.height);
+    }
+
+    // Draw Save Slots
+    slots.forEach((slot, index) => {
+        const sprite = images[slot.imgKey];
+        
+        // Draw the specific paper sprite for this slot
+        if (sprite) {
+            ctx.drawImage(sprite, slot.x, slot.y);
+        }
+
+        // Draw selection circle/highlight around the active slot
+        if (index === selectedSlot && images.selector) {
+            // Adjust x/y offsets to make the "circle" fit perfectly
+            ctx.drawImage(images.selector, slot.x - 10, slot.y - 10);
+        }
+    });
+}
+
+// 3. Input Handling
+window.addEventListener('keydown', (e) => {
+    if (e.key === "ArrowDown") {
+        selectedSlot = (selectedSlot + 1) % slots.length;
+    } else if (e.key === "ArrowUp") {
+        selectedSlot = (selectedSlot - 1 + slots.length) % slots.length;
+    }
+    draw();
+});
+
+loadAssets();
