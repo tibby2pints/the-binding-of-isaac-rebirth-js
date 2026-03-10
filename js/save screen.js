@@ -7,7 +7,7 @@ const assets = {
     slot1: 'file1.png',
     slot2: 'file2.png',
     slot3: 'file3.png',
-    selector: 'assets/red_highlight.png'
+    selector: 'highlight.png'
 };
 
 const images = {};
