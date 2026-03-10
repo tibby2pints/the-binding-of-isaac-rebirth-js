@@ -25,6 +25,13 @@ html { background: #151515;	font: 1em Arial; }
 	text-align: center;
 	position: relative;
 }
+#savemenu {
+	width: 960px;
+	margin: 20px auto;
+	line-height:0px;
+	text-align: center;
+	position: relative;
+}
 
 
 #fullscreen:fullscreen #game {
