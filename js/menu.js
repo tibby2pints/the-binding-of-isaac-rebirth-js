@@ -58,6 +58,6 @@ let loaded = 0;
 // Start Transition
 window.addEventListener("keydown", (e) => {
     if (e.code === "Enter" || e.code === "Space") {
-        window.location.href = "indexx.html"; 
+        window.location.href = "save.html"; 
     }
 });
