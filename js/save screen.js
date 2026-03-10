@@ -3,10 +3,10 @@ const ctx = canvas.getContext('2d');
 
 // 1. Define Asset Paths (Replace these with your actual local file paths)
 const assets = {
-    background: 'assets/menu_bg.png',
-    slot1: 'assets/save_mom_killed.png',
-    slot2: 'assets/save_heart_killed.png',
-    slot3: 'assets/save_empty.png',
+    background: 'title bg.png',
+    slot1: 'file1.png',
+    slot2: 'file2.png',
+    slot3: 'file3.png',
     selector: 'assets/red_highlight.png'
 };
 
