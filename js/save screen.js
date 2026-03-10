@@ -1,38 +1,31 @@
-// 1. Setup Canvas
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// 2. Asset Paths (Ensure these match your GitHub folder/file names exactly)
+// 1. Assets
 const assets = {
     background: 'title bg.png',
     slot1: 'file1.png',
     slot2: 'file2.png',
-    slot3: 'file3.png'
+    slot3: 'file3.png',
+    selector: 'highlight.png'
 };
 
 const images = {};
 let loadedCount = 0;
 const totalAssets = Object.keys(assets).length;
 
-// 3. Horizontal Slots
+// 2. Settings (Adjust SCALE to change size)
+const scale = 2.0; // 2.0 = Double size
+const slotY = 150; // Vertical position
 const slots = [
-    { id: 0, imgKey: 'slot1', x: 100, y: 180, scale: 1 },
-    { id: 1, imgKey: 'slot2', x: 400, y: 180, scale: 1 },
-    { id: 2, imgKey: 'slot3', x: 700, y: 180, scale: 1 }
+    { id: 0, imgKey: 'slot1', x: 80 },
+    { id: 1, imgKey: 'slot2', x: 360 },
+    { id: 2, imgKey: 'slot3', x: 640 }
 ];
 
 let selectedSlot = 0;
-let pulseAngle = 0;
 
-// Emergency on-screen error display
-window.onerror = (msg, url, line) => {
-    const err = document.createElement('div');
-    err.style = "position:fixed;top:0;left:0;background:red;color:white;padding:10px;z-index:9999;";
-    err.innerHTML = `Error: ${msg} <br> Line: ${line}`;
-    document.body.appendChild(err);
-};
-
-// 4. Load Assets
+// 3. Load Logic
 function loadAssets() {
     for (let key in assets) {
         images[key] = new Image();
@@ -41,46 +34,50 @@ function loadAssets() {
             loadedCount++;
             if (loadedCount === totalAssets) animate();
         };
-        images[key].onerror = () => alert("Missing file: " + assets[key]);
+        images[key].onerror = () => console.log("Missing: " + assets[key]);
     }
 }
 
-// 5. Draw Function with "Pulsing" and "Shaking"
+// 4. The Isaac Draw Loop
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Disable smoothing for that "Pixel Art" look
+    ctx.imageSmoothingEnabled = false;
+
+    // Draw Background
     if (images.background) {
         ctx.drawImage(images.background, 0, 0, canvas.width, canvas.height);
     }
-
-    pulseAngle += 0.1; // Speed of the pulsing
 
     slots.forEach((slot, index) => {
         const sprite = images[slot.imgKey];
         if (!sprite) return;
 
-        let x = slot.x;
-        let y = slot.y;
-        let width = sprite.width;
-        let height = sprite.height;
+        // Calculate scaled dimensions
+        const sw = sprite.width * scale;
+        const sh = sprite.height * scale;
 
+        // Draw Save File
+        ctx.drawImage(sprite, slot.x, slot.y, sw, sh);
+
+        // Draw Shaky Highlight
         if (index === selectedSlot) {
-            // AUTHENTIC EFFECT: Pulsing Scale
-            const pulse = Math.sin(pulseAngle) * 0.05; // 5% size change
-            const scale = 1.1 + pulse; // Slightly larger when selected
-            
-            // Re-center for the scale
-            width *= scale;
-            height *= scale;
-            x -= (width - sprite.width) / 2;
-            y -= (height - sprite.height) / 2;
+            const shake = () => (Math.random() - 0.5) * 5;
+            const hx = slot.x - (10 * scale) + shake();
+            const hy = slot.y - (10 * scale) + shake();
+            const hw = sw + (20 * scale);
+            const hh = sh + (20 * scale);
 
-            // AUTHENTIC EFFECT: Subtle Hand-Drawn Shake
-            x += (Math.random() - 0.5) * 3;
-            y += (Math.random() - 0.5) * 3;
+            if (images.selector) {
+                ctx.drawImage(images.selector, hx, hy, hw, hh);
+            } else {
+                // Red fallback if highlight.png is missing
+                ctx.strokeStyle = "red";
+                ctx.lineWidth = 4;
+                ctx.strokeRect(hx, hy, hw, hh);
+            }
         }
-
-        ctx.drawImage(sprite, x, y, width, height);
     });
 }
 
@@ -89,7 +86,7 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// 6. Controls
+// 5. Controls
 window.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") selectedSlot = (selectedSlot + 1) % slots.length;
     if (e.key === "ArrowLeft") selectedSlot = (selectedSlot - 1 + slots.length) % slots.length;
